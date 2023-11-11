@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import letterAnimate from "../../utils/letterAnimate";
+import { useEffect, useState } from "react";
 
 const StyledContainer = styled.div`
   margin-left: 100px;
@@ -13,29 +14,52 @@ const StyledHeader = styled.h2`
   line-height: 50px;
 `;
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1
+  }
+`;
+
 const StyledSub = styled.p`
   color: grey;
   margin: 20px 0;
+  animation: ${() => css`1.5s ${fadeIn} 0.5s both`};
+`;
+
+const buttonRoll = keyframes`
+  from {
+    background-position: -200px 0px;
+  }
+  to {
+    background-position: 0px 0px;
+  }
 `;
 
 const StyledContact = styled.button`
   text-transform: uppercase;
-  background-color: transparent;
-  border: 1px solid gold;
   color: gold;
-  padding: 10px;
+  background-image: linear-gradient(45deg, #6b0080 46%, white 48%, #6b0080 50%);
+  background-repeat: no-repeat;
+  background-size: 300% 100%;
+  border: none;
+  width: 120px;
   border-radius: 3px;
   cursor: pointer;
-  transition: all 0.3s;
+  animation: ${() => css`1.5s ${fadeIn} 0.5s both`};
+  transition: all 0.2s;
 
   &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 0 10px 0 gold;
+    animation: ${() => css`
+        ${buttonRoll} 1s ease-out 0s forwards
+      `},
+      ${() => css`1.5s ${fadeIn} 0.5s both`};
   }
 
   &:active {
-    transform: none;
-    box-shadow: none;
+    transform: scale(0.99);
   }
 
   @media (hover: none) {
@@ -43,18 +67,34 @@ const StyledContact = styled.button`
   }
 `;
 
+const StyledContactText = styled.div`
+  background-color: black;
+  padding: 10px;
+  margin: 3px;
+  border-radius: 3px;
+`;
+
 const greeting = "Hello,";
+const intro = "I'm Boško";
 
 function Home() {
+  const [animateIntro, setAnimateIntro] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setAnimateIntro(false), 3000);
+  }, []);
+
   return (
     <StyledContainer>
       <StyledHeader>
-        {letterAnimate(greeting, 0)}
+        {letterAnimate(greeting, 0, animateIntro)}
         <br />
-        I&apos;m Boško
+        {letterAnimate(intro, greeting.length, animateIntro)}
       </StyledHeader>
       <StyledSub>Full stack developer</StyledSub>
-      <StyledContact>Contact me</StyledContact>
+      <StyledContact>
+        <StyledContactText>Contact me</StyledContactText>
+      </StyledContact>
     </StyledContainer>
   );
 }
