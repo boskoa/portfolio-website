@@ -20,6 +20,7 @@ const StyledSidebar = styled.div`
   bottom: 0;
   width: 100px;
   background-color: black;
+  z-index: 10;
 `;
 
 const StyledNav = styled.nav`

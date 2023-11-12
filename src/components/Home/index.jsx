@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 import letterAnimate from "../../utils/letterAnimate";
 import { useEffect, useState } from "react";
+import Background from "./Background";
 
 const StyledContainer = styled.div`
   margin-left: 100px;
@@ -95,6 +96,7 @@ function Home() {
       <StyledContact>
         <StyledContactText>Contact me</StyledContactText>
       </StyledContact>
+      <Background />
     </StyledContainer>
   );
 }
