@@ -30,8 +30,9 @@ function Background() {
       },
       {
         width: "90vw",
-        delay: 3,
-        duration: 3,
+        delay: 2,
+        duration: 2,
+        ease: "expo.in",
       },
     );
   }, []);

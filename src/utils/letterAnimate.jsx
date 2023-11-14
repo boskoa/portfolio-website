@@ -52,13 +52,12 @@ export const StyledLetter = styled.span`
 
   &:hover {
     animation: ${({ $animateIntro }) =>
-      $animateIntro ? "" : css`0.5s ease-in ${rubber} forwards`};
+      $animateIntro ? "" : css`0.5s ease-in ${rubber} both`};
   }
 `;
 
 function letterAnimate(letters, start, animateIntro) {
   const lettersArray = letters.split("");
-  console.log(lettersArray);
 
   return (
     <span>

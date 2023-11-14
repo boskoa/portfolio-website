@@ -87,7 +87,7 @@ function Sidebar() {
       </Link>
       <StyledNav>
         <StyledNavLink to="/" exact="true" activeclassname="active" text="Home">
-          <FontAwesomeIcon icon={faHome} color="inherit" />
+          <FontAwesomeIcon icon={faHome} color="grey" />
         </StyledNavLink>
         <StyledNavLink
           to="/about"
