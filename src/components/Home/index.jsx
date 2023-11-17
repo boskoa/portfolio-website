@@ -5,6 +5,7 @@ import Background from "./Background";
 
 const StyledContainer = styled.div`
   margin-left: 100px;
+  min-height: 100vh;
   padding: 50px;
   color: white;
 `;

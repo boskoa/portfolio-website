@@ -7,7 +7,7 @@
 
 body {
   min-width: 360px;
-  background-color: rgb(2, 34, 69);
+  background: rgb(2, 34, 69);
 }
 
 .active>svg {

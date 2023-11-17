@@ -10,6 +10,7 @@ import NodeLogo from "../../assets/nodejs.svg";
 
 const StyledContainer = styled.div`
   margin-left: 100px;
+  min-height: 100vh;
   padding: 50px;
   color: white;
 `;
@@ -158,7 +159,10 @@ function About() {
               <StyledLogo src={CssLogo} />
             </StyledCubeSide>
             <StyledCubeSide $transform="translateZ(-150px)">
-              <StyledLogo src={JsLogo} />
+              <StyledLogo
+                src={JsLogo}
+                style={{ transform: "rotateY(180deg)" }}
+              />
             </StyledCubeSide>
           </StyledCube>
         </StyledCubeContainer>
