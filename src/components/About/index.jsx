@@ -155,14 +155,14 @@ function About() {
             <StyledCubeSide $origin="50% 0%" $transform="rotateX(270deg)">
               <StyledLogo src={HtmlLogo} />
             </StyledCubeSide>
-            <StyledCubeSide $origin="50% 100%" $transform="rotateX(90deg)">
+            <StyledCubeSide
+              $origin="50% 100%"
+              $transform="rotateX(90deg) rotateY(180deg)"
+            >
               <StyledLogo src={CssLogo} />
             </StyledCubeSide>
-            <StyledCubeSide $transform="translateZ(-150px)">
-              <StyledLogo
-                src={JsLogo}
-                style={{ transform: "rotateY(180deg)" }}
-              />
+            <StyledCubeSide $transform="translateZ(-150px) rotateY(180deg)">
+              <StyledLogo src={JsLogo} />
             </StyledCubeSide>
           </StyledCube>
         </StyledCubeContainer>

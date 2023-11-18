@@ -52,7 +52,7 @@ export const StyledLetter = styled.span`
 
   &:hover {
     animation: ${({ $animateIntro }) =>
-      $animateIntro ? "" : css`0.5s ease-in ${rubber} both`};
+      $animateIntro ? "" : css`0.2s ease-in ${rubber} both`};
   }
 `;
 

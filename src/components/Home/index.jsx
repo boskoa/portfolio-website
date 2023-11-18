@@ -77,7 +77,7 @@ const StyledContactText = styled.div`
 `;
 
 const greeting = "Hello,";
-const intro = "I'm Boško";
+const intro = "I'm Ćoško";
 
 function Home() {
   const [animateIntro, setAnimateIntro] = useState(true);
