@@ -9,7 +9,3 @@ body {
   min-width: 360px;
   background: rgb(2, 34, 69);
 }
-
-.active>svg {
-  color: gold;
-}
