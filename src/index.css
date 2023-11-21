@@ -9,3 +9,13 @@ body {
   min-width: 360px;
   background: rgb(2, 34, 69);
 }
+
+.icon-rotate {
+  width: 80px;
+  font-size: 36px;
+}
+
+.sub-icon-rotate {
+  width: 60px;
+  font-size: 28px;
+}
