@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled, { css, keyframes } from "styled-components";
+import Menu from "./Menu";
 
 const StyledContainer = styled.div`
   margin-left: 100px;
@@ -220,57 +221,60 @@ function Testing() {
 
   return (
     <StyledContainer ref={containerRef}>
-      <StyledCircle $top="0" $zIndex={5}>
-        <StyledMask $direction={true}>
-          <StyledBorderCirc
-            $direction={true}
-            $background="linear-gradient(yellow 10%, green)"
-          />
-        </StyledMask>
-        <StyledIconContainer>
-          <StyledRipple className="ripple" />
-          <StyledIcon>A</StyledIcon>
-        </StyledIconContainer>
-      </StyledCircle>
-      <StyledCircle $top="-10px" $left="6px" $zIndex={4}>
-        <StyledMask $direction={false} $delay="0.98s">
-          <StyledBorderCirc
-            $direction={false}
-            $background="linear-gradient(yellow 10%, green 90%)"
-            $delay="0.98s"
-          />
-        </StyledMask>
-        <StyledIconContainer>
-          <StyledRipple className="ripple" />
-          <StyledIcon>B</StyledIcon>
-        </StyledIconContainer>
-      </StyledCircle>
-      <StyledCircle $top="-20px" $zIndex={3}>
-        <StyledMask $direction={true} $delay="1.96s">
-          <StyledBorderCirc
-            $direction={true}
-            $background="linear-gradient(yellow, green 90%)"
-            $delay="1.96s"
-          />
-        </StyledMask>
-        <StyledIconContainer>
-          <StyledRipple className="ripple" />
-          <StyledIcon>C</StyledIcon>
-        </StyledIconContainer>
-      </StyledCircle>
-      <StyledCircle $top="-30px" $left="6px" $zIndex={3}>
-        <StyledMask $direction={false} $delay="2.94s">
-          <StyledBorderCirc
-            $direction={false}
-            $background="linear-gradient(yellow, purple 90%)"
-            $delay="2.94s"
-          />
-        </StyledMask>
-        <StyledIconContainer>
-          <StyledRipple className="ripple" />
-          <StyledIcon>D</StyledIcon>
-        </StyledIconContainer>
-      </StyledCircle>
+      <Menu />
+      <div style={{ marginTop: 100 }}>
+        <StyledCircle $top="0" $zIndex={5}>
+          <StyledMask $direction={true}>
+            <StyledBorderCirc
+              $direction={true}
+              $background="linear-gradient(yellow 10%, green)"
+            />
+          </StyledMask>
+          <StyledIconContainer>
+            <StyledRipple className="ripple" />
+            <StyledIcon>A</StyledIcon>
+          </StyledIconContainer>
+        </StyledCircle>
+        <StyledCircle $top="-10px" $left="6px" $zIndex={4}>
+          <StyledMask $direction={false} $delay="0.98s">
+            <StyledBorderCirc
+              $direction={false}
+              $background="linear-gradient(yellow 10%, green 90%)"
+              $delay="0.98s"
+            />
+          </StyledMask>
+          <StyledIconContainer>
+            <StyledRipple className="ripple" />
+            <StyledIcon>B</StyledIcon>
+          </StyledIconContainer>
+        </StyledCircle>
+        <StyledCircle $top="-20px" $zIndex={3}>
+          <StyledMask $direction={true} $delay="1.96s">
+            <StyledBorderCirc
+              $direction={true}
+              $background="linear-gradient(yellow, green 90%)"
+              $delay="1.96s"
+            />
+          </StyledMask>
+          <StyledIconContainer>
+            <StyledRipple className="ripple" />
+            <StyledIcon>C</StyledIcon>
+          </StyledIconContainer>
+        </StyledCircle>
+        <StyledCircle $top="-30px" $left="6px" $zIndex={3}>
+          <StyledMask $direction={false} $delay="2.94s">
+            <StyledBorderCirc
+              $direction={false}
+              $background="linear-gradient(yellow, purple 90%)"
+              $delay="2.94s"
+            />
+          </StyledMask>
+          <StyledIconContainer>
+            <StyledRipple className="ripple" />
+            <StyledIcon>D</StyledIcon>
+          </StyledIconContainer>
+        </StyledCircle>
+      </div>
       <StyledScrollLine />
       <StyledAdvance ref={advanceRef} />
       <StyledDot ref={dotRef} />
