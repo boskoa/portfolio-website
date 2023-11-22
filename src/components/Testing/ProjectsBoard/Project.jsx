@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import ProjectTitle from "./ProjectTitle";
 
 const ProjectContainer = styled.div`
   width: 300px;
@@ -79,6 +80,7 @@ function Project() {
         src="https://picsum.photos/id/237/200/300"
         className="image-board"
       />
+      <ProjectTitle title="proba" start={0} animate={true} />
     </ProjectContainer>
   );
 }
