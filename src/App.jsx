@@ -6,6 +6,7 @@ import { Suspense, lazy } from "react";
 const About = lazy(() => import("./components/About"));
 const Contact = lazy(() => import("./components/Contact"));
 const Testing = lazy(() => import("./components/Testing"));
+const ProjectsBoard = lazy(() => import("./components/Testing/ProjectsBoard"));
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +36,14 @@ function App() {
           element: (
             <Suspense>
               <Testing />
+            </Suspense>
+          ),
+        },
+        {
+          path: "projects",
+          element: (
+            <Suspense>
+              <ProjectsBoard />
             </Suspense>
           ),
         },
