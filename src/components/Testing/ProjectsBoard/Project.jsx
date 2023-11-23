@@ -16,28 +16,30 @@ const ProjectContainer = styled.div`
     transform: scale(0.83);
   }
 
-  &:hover > img {
+  &:hover > .image-board {
     transform: translateZ(30px);
   }
 `;
 
 const Shadow = styled.div`
-  width: 300px;
+  width: 280px;
   height: 160px;
   position: absolute;
   top: 20px;
-  left: 0px;
+  left: 10px;
   box-shadow:
-    10px 10px 40px 0 black,
-    -10px -10px 40px 0 black,
-    -10px 10px 40px 0 black,
-    10px -10px 40px 0 black;
+    0 0 40px 10px black,
+    0 0 40px 10px black,
+    0 0 40px 10px black,
+    0 0 40px 10px black;
   transform: scale(0.6);
   transition: all 0.3s;
 `;
 
-const Image = styled.img`
+const ImageBoard = styled.div`
   object-fit: cover;
+  background: url(https://picsum.photos/id/237/200/300);
+  background-size: cover;
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -76,11 +78,9 @@ function Project() {
   return (
     <ProjectContainer ref={boardRef}>
       <Shadow />
-      <Image
-        src="https://picsum.photos/id/237/200/300"
-        className="image-board"
-      />
-      <ProjectTitle title="proba" start={0} animate={true} />
+      <ImageBoard className="image-board">
+        <ProjectTitle title="proba" start={0} animate={true} />
+      </ImageBoard>
     </ProjectContainer>
   );
 }

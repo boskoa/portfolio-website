@@ -1,57 +1,77 @@
 import styled, { css, keyframes } from "styled-components";
 
-const TitleContainer = styled.span`
-  width: 260px;
-  height: 30px;
-  text-align: center;
-  position: absolute;
-  top: 40%;
-  left: 20px;
-  border: 1px solid red;
-  color: white;
-  transform: translateZ(50px);
-`;
-
-const letterAnimation = keyframes`
+const first = keyframes`
   0% {
-    transform: scale(1);
+    transform: translate(10px, 1px);
   }
-  50% {
-    color: gold;
-    transform: scale(1.1);
+  30% {
+     transform: translate(-5px, -4px);
   }
-  70% {
-    color: gold;
-    transform: scale(0.9);
+  60% {
+    transform: translate(5px, 3px);
   }
-  100% {
-    color: gold;
-    transform: scale(1);
+  90% {
+    transform: translate(-10px, -1px);
+  }
+  100%{
+    transform: translate(0px, 0px);
   }
 `;
 
-const StyledLetter = styled.span`
-  display: inline-block;
-  //opacity: ${({ $animate }) => ($animate ? 0 : 1)};
-  min-width: 6px;
-  animation: ${({ $delay, $animate }) =>
-    $animate
-      ? css`0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${letterAnimation} ${
-          $delay * 100 + 500
-        }ms forwards`
-      : ""};
+const second = keyframes`
+  0% {
+    transform: translate(-10px, 2px);
+  }
+  30% {
+     transform: translate(5px, -5px);
+  }
+  60% {
+    transform: translate(-5px, -1px);
+  }
+  90% {
+    transform: translate(10px, 7px);
+  }
+  100%{
+    transform: translate(0px, 0px);
+  }
 `;
 
-function ProjectTitle({ title, start, animate }) {
-  const titleArray = title.split("");
+const TitleContainer = styled.div`
+  width: 260px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-size: 40px;
+  font-weight: 800;
+  text-shadow: 0 0 7px black;
+  transform: translateZ(50px);
 
+  &:hover > :nth-child(1) {
+    animation: ${() => css`0.6s ${first} 1s linear`};
+  }
+
+  &:hover > :nth-child(2) {
+    animation: ${() => css`0.6s ${second} 1s ease-in`};
+  }
+`;
+
+const Title = styled.span`
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 30%;
+  color: ${({ $color }) => $color};
+`;
+
+function ProjectTitle({ title }) {
   return (
     <TitleContainer>
-      {titleArray.map((l, i) => (
-        <StyledLetter key={l + i} $delay={start + i} $animate={animate}>
-          {l}
-        </StyledLetter>
-      ))}
+      <Title $color="lime">{title}</Title>
+      <Title $color="pink">{title}</Title>
+      <Title $color="cyan">{title}</Title>
     </TitleContainer>
   );
 }
