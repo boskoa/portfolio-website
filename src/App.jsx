@@ -7,6 +7,7 @@ const About = lazy(() => import("./components/About"));
 const Contact = lazy(() => import("./components/Contact"));
 const Testing = lazy(() => import("./components/Testing"));
 const ProjectsBoard = lazy(() => import("./components/Testing/ProjectsBoard"));
+const ConsoleStyle = lazy(() => import("./components/Testing/ConsoleStyle"));
 
 function App() {
   const router = createBrowserRouter([
@@ -44,6 +45,14 @@ function App() {
           element: (
             <Suspense>
               <ProjectsBoard />
+            </Suspense>
+          ),
+        },
+        {
+          path: "console",
+          element: (
+            <Suspense>
+              <ConsoleStyle />
             </Suspense>
           ),
         },

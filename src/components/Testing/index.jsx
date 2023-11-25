@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Menu from "./Menu";
+import GradientBox from "./GradientBox";
 
 const StyledContainer = styled.div`
   margin-left: 100px;
@@ -275,6 +276,7 @@ function Testing() {
           </StyledIconContainer>
         </StyledCircle>
       </div>
+      <GradientBox />
       <StyledScrollLine />
       <StyledAdvance ref={advanceRef} />
       <StyledDot ref={dotRef} />
