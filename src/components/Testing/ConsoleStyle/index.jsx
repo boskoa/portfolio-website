@@ -159,6 +159,44 @@ function ConsoleStyle() {
           delay: 1870,
         },
       ];
+    } else if (command === "image") {
+      response = [
+        {
+          variant: "response",
+          text: ".:lxkkOxl;.",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: "      .:xkKXXXXXKKK00xc'      ",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: "    ;kXXXXXKK00000KKKK00Ol.   ",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: "  .xXXXXKKKKK0000000KKKKK00:  ",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: " ;KXNXK0kxxxxxxxxddoodxO0KK0d ",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: ":KKX0xlc:;;,,,,,,,''',;cd0XK0:",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: "cKX0dc:;;,,''''''''''',,;oO00d",
+          delay: 100,
+        },
+      ];
     } else {
       response = [{ variant: "response", text: "Wrong command", delay: 100 }];
     }
