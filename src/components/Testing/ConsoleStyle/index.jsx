@@ -1,12 +1,14 @@
+/* eslint-disable indent */
 import styled, { css, keyframes } from "styled-components";
-import typeText from "../../../utils/consoleTyping";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Response from "./Response";
 
 const Container = styled.div`
   margin-left: 100px;
   background-color: #1f1d1d;
   min-height: 100vh;
   position: relative;
+  font-family: "IBM Plex Mono", monospace;
 `;
 
 const flicker = keyframes`
@@ -34,6 +36,8 @@ const shadow = keyframes`
   `;
 
 const LettersContainer = styled.div`
+  font-weight: 600;
+  font-size: 14px;
   color: lime;
   width: 100%;
   transition: all 1s;
@@ -68,9 +72,25 @@ const LettersContainer = styled.div`
   }
 `;
 
-const Letter = styled.span`
-  font-size: 18px;
+const Responses = styled.div``;
+
+const PromptContainer = styled.form`
+  position: relative;
+
+  & > * {
+    font-family: "IBM Plex Mono", monospace;
+  }
+`;
+
+const PromptInput = styled.input`
+  position: absolute;
+  bottom: 0;
+  background-color: transparent;
+  border: none;
+  color: inherit;
   font-weight: 600;
+  font-size: 14px;
+  z-index: -100;
 `;
 
 const blink = keyframes`
@@ -82,86 +102,147 @@ const blink = keyframes`
   }
 `;
 
-const PromptContainer = styled.div``;
-
-const PromptInput = styled.span``;
-
-const Underline = styled.span`
+const Underline = styled.label`
+  position: relative;
+  left: ${({ $left }) => $left}ch;
+  font-weight: 600;
+  font-size: 14px;
   opacity: 0;
   animation: ${() => css`
       0.3s ${blink} alternate infinite
     `};
+
+  &::after {
+    content: "";
+    width: calc(100vw - 100px);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 100px;
+  }
 `;
 
 function ConsoleStyle() {
   const promptRef = useRef();
   const parentRef = useRef();
+  const inputRef = useRef();
   const [command, setCommand] = useState("");
-  const [entered, setEntered] = useState(false);
+  const [commandIndex, setCommandIndex] = useState(0);
+  const [previousCommands, setPreviousCommands] = useState([""]);
+  const [responses, setResponses] = useState([]);
+  const [cursor, setCursor] = useState(0);
 
-  const letters = typeText("Proba, proba");
+  const handleCommand = useCallback(function (e) {
+    e.preventDefault();
+    const command = e.target.command.value;
+    let response = "";
 
-  function checkInput(input) {
-    switch (input) {
-      case "foo":
-        return "bar";
-      default:
-        return false;
+    if (command === "foo") {
+      response = [{ variant: "response", text: "HAI", delay: 100 }];
+    } else if (command === "education") {
+      response = [
+        {
+          variant: "response",
+          text: "Elementary school: some school",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: "High school: some high school",
+          delay: 1000,
+        },
+        {
+          variant: "response",
+          text: "University: some university",
+          delay: 1870,
+        },
+      ];
+    } else {
+      response = [{ variant: "response", text: "Wrong command", delay: 100 }];
     }
-  }
 
-  useEffect(() => {
-    function handleTyping(e) {
-      if (e.keyCode === 13) {
-        return setEntered(true);
-      }
-
-      if (e.keyCode === 8) {
-        return setCommand((p) => p.slice(0, p.length - 1));
-      }
-
-      if (e.keyCode < 48) {
-        return;
-      } else if (e.keyCode > 57 && e.keyCode < 65) {
-        return;
-      } else if (e.keyCode > 90) {
-        return;
-      }
-
-      setCommand((p) => p + e.key);
-    }
-
-    document.addEventListener("keydown", handleTyping);
-
-    return () => document.removeEventListener("keydown", handleTyping);
+    e.target.command.value = "";
+    setResponses((p) => [
+      ...p,
+      { variant: "command", text: command },
+      ...response,
+    ]);
+    setPreviousCommands((p) => ["", command, ...p.slice(1)]);
+    setCommandIndex(0);
+    setCommand("");
+    setCursor(0);
   }, []);
 
   useEffect(() => {
-    if (entered) {
-      if (checkInput(command)) {
-        const element = document.createElement("p");
-        element.textContent = command;
-        parentRef.current.insertBefore(element, promptRef.current);
-      } else {
-        const element = document.createElement("p");
-        element.textContent = "Wrong command";
-        parentRef.current.insertBefore(element, promptRef.current);
-      }
+    if (commandIndex > 0) {
+      inputRef.current.value = previousCommands[commandIndex];
+      setCommand(previousCommands[commandIndex]);
+    } else {
       setCommand("");
-      setEntered(false);
+      inputRef.current.value = "";
     }
-  }, [entered]);
+
+    setTimeout(() => inputRef.current.setSelectionRange(100, 100));
+  }, [previousCommands, commandIndex]);
 
   return (
     <Container>
       <LettersContainer ref={parentRef}>
-        {letters.map((l, i) => (
-          <Letter key={i}>{l}</Letter>
-        ))}
-        <PromptContainer ref={promptRef}>
-          <span>{"> "}</span>
-          <PromptInput>{command}</PromptInput>
-          <Underline>_</Underline>
+        <Responses>
+          {responses.map((r, i) => {
+            return (
+              <Response
+                promptRef={promptRef.current}
+                r={r}
+                delay={r.delay}
+                key={i}
+              />
+            );
+          })}
+        </Responses>
+        <PromptContainer
+          id="command-form"
+          ref={promptRef}
+          onSubmit={handleCommand}
+        >
+          <span>
+            {"> "}
+            {command}
+          </span>
+          <PromptInput
+            ref={inputRef}
+            id="command"
+            name="command"
+            autoFocus
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            onChange={(e) => {
+              setCommand(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowUp") {
+                setCommandIndex((p) =>
+                  p === previousCommands.length - 1
+                    ? previousCommands.length - 1
+                    : p + 1,
+                );
+              } else if (e.key === "ArrowDown") {
+                setCommandIndex((p) => (p === 0 ? 0 : p - 1));
+              } else if (e.key === "ArrowLeft") {
+                setCursor((p) => (e.target.value.length + p <= 0 ? p : p - 1));
+              } else if (e.key === "ArrowRight") {
+                setCursor((p) => (p === 0 ? 0 : p + 1));
+              }
+            }}
+          />
+          <Underline htmlFor="command" $left={cursor}>
+            _
+          </Underline>
+          <input type="submit" hidden />
         </PromptContainer>
       </LettersContainer>
     </Container>
