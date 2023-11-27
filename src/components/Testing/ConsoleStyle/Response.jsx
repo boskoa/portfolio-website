@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 
 const Container = styled.p`
@@ -18,8 +18,10 @@ const typing = keyframes`
 
 const Letter = styled.span`
   opacity: ${({ $animate }) => ($animate ? 0 : 1)};
+  font-family: "IBM Plex Mono", monospace;
   font-size: 14px;
   font-weight: ${({ $animate }) => ($animate ? 500 : 600)};
+  white-space: pre;
   animation: ${({ $delay, $animate }) =>
     $animate
       ? css`
@@ -62,4 +64,6 @@ function Response({ delay, r, promptRef }) {
   );
 }
 
-export default Response;
+const MemoizedResponse = memo(Response);
+
+export default MemoizedResponse;

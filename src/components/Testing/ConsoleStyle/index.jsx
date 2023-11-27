@@ -38,7 +38,7 @@ const shadow = keyframes`
 const LettersContainer = styled.div`
   font-weight: 600;
   font-size: 14px;
-  color: lime;
+  color: #00ffbf;
   width: 100%;
   transition: all 1s;
   animation: ${() => css`
@@ -73,6 +73,13 @@ const LettersContainer = styled.div`
 `;
 
 const Responses = styled.div``;
+
+const PreviousResponses = styled.p`
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: ${({ $animate }) => ($animate ? 500 : 600)};
+  white-space: pre;
+`;
 
 const PromptContainer = styled.form`
   position: relative;
@@ -132,6 +139,7 @@ function ConsoleStyle() {
   const [commandIndex, setCommandIndex] = useState(0);
   const [previousCommands, setPreviousCommands] = useState([""]);
   const [responses, setResponses] = useState([]);
+  const [currentResponse, setCurrentResponse] = useState([]);
   const [cursor, setCursor] = useState(0);
 
   const handleCommand = useCallback(function (e) {
@@ -201,17 +209,69 @@ function ConsoleStyle() {
       response = [{ variant: "response", text: "Wrong command", delay: 100 }];
     }
 
+    const timeout = response.reduce((p, c) => p + c.delay, 100);
     e.target.command.value = "";
-    setResponses((p) => [
-      ...p,
-      { variant: "command", text: command },
-      ...response,
-    ]);
     setPreviousCommands((p) => ["", command, ...p.slice(1)]);
     setCommandIndex(0);
     setCommand("");
     setCursor(0);
+    setCurrentResponse(response);
+    setResponses((p) => [...p, { variant: "command", text: command }]);
+    setTimeout(() => {
+      setResponses((p) => [...p, ...response]);
+      setCurrentResponse([]);
+      promptRef.current.scrollIntoView(true);
+    }, timeout);
   }, []);
+
+  useEffect(() => {
+    const index = setTimeout(() => {
+      setCurrentResponse([
+        {
+          variant: "response",
+          text: " _          _ _       ",
+          delay: 100,
+        },
+        {
+          variant: "response",
+          text: "| |        | | |      ",
+          delay: 800,
+        },
+        {
+          variant: "response",
+          text: "| |__   ___| | | ___  ",
+          delay: 1500,
+        },
+        {
+          variant: "response",
+          text: "| '_ \\ / _ \\ | |/ _ \\ ",
+          delay: 2200,
+        },
+        {
+          variant: "response",
+          text: "| | | |  __/ | | (_) |",
+          delay: 2900,
+        },
+        {
+          variant: "response",
+          text: "|_| |_|\\___|_|_|\\___/   ",
+          delay: 3600,
+        },
+        {
+          variant: "response",
+          text: "   ",
+          delay: 4300,
+        },
+        {
+          variant: "response",
+          text: "Enter `help` for list of commands",
+          delay: 4400,
+        },
+      ]);
+    });
+
+    return () => clearInterval(index);
+  });
 
   useEffect(() => {
     if (commandIndex > 0) {
@@ -229,16 +289,19 @@ function ConsoleStyle() {
     <Container>
       <LettersContainer ref={parentRef}>
         <Responses>
-          {responses.map((r, i) => {
-            return (
-              <Response
-                promptRef={promptRef.current}
-                r={r}
-                delay={r.delay}
-                key={i}
-              />
-            );
-          })}
+          {responses.map((r, i) => (
+            <PreviousResponses key={i} $animate={r.variant === "response"}>
+              {r.text}
+            </PreviousResponses>
+          ))}
+          {currentResponse.map((r, i) => (
+            <Response
+              key={i}
+              promptRef={promptRef.current}
+              r={r}
+              delay={r.delay}
+            />
+          ))}
         </Responses>
         <PromptContainer
           id="command-form"
