@@ -159,12 +159,12 @@ function ConsoleStyle() {
         {
           variant: "response",
           text: "High school: some high school",
-          delay: 1000,
+          delay: 400,
         },
         {
           variant: "response",
           text: "University: some university",
-          delay: 1870,
+          delay: 690,
         },
       ];
     } else if (command === "image") {
@@ -209,7 +209,7 @@ function ConsoleStyle() {
       response = [{ variant: "response", text: "Wrong command", delay: 100 }];
     }
 
-    const timeout = response.reduce((p, c) => p + c.delay, 100);
+    const timeout = response[response.length - 1].delay + 300;
     e.target.command.value = "";
     setPreviousCommands((p) => ["", command, ...p.slice(1)]);
     setCommandIndex(0);
@@ -225,53 +225,63 @@ function ConsoleStyle() {
   }, []);
 
   useEffect(() => {
+    const response = [
+      {
+        variant: "response",
+        text: " _          _ _       ",
+        delay: 100,
+      },
+      {
+        variant: "response",
+        text: "| |        | | |      ",
+        delay: 320,
+      },
+      {
+        variant: "response",
+        text: "| |__   ___| | | ___  ",
+        delay: 540,
+      },
+      {
+        variant: "response",
+        text: "| '_ \\ / _ \\ | |/ _ \\ ",
+        delay: 760,
+      },
+      {
+        variant: "response",
+        text: "| | | |  __/ | | (_) |",
+        delay: 980,
+      },
+      {
+        variant: "response",
+        text: "|_| |_|\\___|_|_|\\___/   ",
+        delay: 1200,
+      },
+      {
+        variant: "response",
+        text: "   ",
+        delay: 1440,
+      },
+      {
+        variant: "response",
+        text: "Enter `help` for list of commands",
+        delay: 1440,
+      },
+      {
+        variant: "response",
+        text: "   ",
+        delay: 1660,
+      },
+    ];
+
+    const timeout = response[response.length - 1].delay + 300;
+    setCurrentResponse(response);
     const index = setTimeout(() => {
-      setCurrentResponse([
-        {
-          variant: "response",
-          text: " _          _ _       ",
-          delay: 100,
-        },
-        {
-          variant: "response",
-          text: "| |        | | |      ",
-          delay: 800,
-        },
-        {
-          variant: "response",
-          text: "| |__   ___| | | ___  ",
-          delay: 1500,
-        },
-        {
-          variant: "response",
-          text: "| '_ \\ / _ \\ | |/ _ \\ ",
-          delay: 2200,
-        },
-        {
-          variant: "response",
-          text: "| | | |  __/ | | (_) |",
-          delay: 2900,
-        },
-        {
-          variant: "response",
-          text: "|_| |_|\\___|_|_|\\___/   ",
-          delay: 3600,
-        },
-        {
-          variant: "response",
-          text: "   ",
-          delay: 4300,
-        },
-        {
-          variant: "response",
-          text: "Enter `help` for list of commands",
-          delay: 4400,
-        },
-      ]);
-    });
+      setResponses((p) => [...p, ...response]);
+      setCurrentResponse([]);
+    }, timeout);
 
     return () => clearInterval(index);
-  });
+  }, []);
 
   useEffect(() => {
     if (commandIndex > 0) {

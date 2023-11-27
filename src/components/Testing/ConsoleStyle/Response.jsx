@@ -25,7 +25,7 @@ const Letter = styled.span`
   animation: ${({ $delay, $animate }) =>
     $animate
       ? css`
-      20ms ${typing} ${$delay} forwards
+      10ms ${typing} ${$delay} forwards
     `
       : ""};
 `;
@@ -53,7 +53,7 @@ function Response({ delay, r, promptRef }) {
         return (
           <Letter
             $animate={r.variant === "response"}
-            $delay={`${i * 30}ms`}
+            $delay={`${i * 10}ms`}
             key={i}
           >
             {l}
